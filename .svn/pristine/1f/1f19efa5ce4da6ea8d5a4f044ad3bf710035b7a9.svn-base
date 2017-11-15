@@ -1,0 +1,117 @@
+<include file="Public/style" />
+
+<body>
+<div class="panel admin-panel">
+  <div class="panel-head"><strong><span class="icon-pencil-square-o"></span> 网站信息</strong></div>
+  <div class="body-content">
+    <form method="post" class="form-x" action="{:U('Admin/setup')}" onsubmit="return addsetup();">
+      <div class="form-group">
+        <div class="label">
+          <label>网站标题：</label>
+        </div>
+        <div class="field">
+          <input type="text" style="width: 250px;" class="input" id='title' name="title" value="{$data['title']}" />
+          <div class="tips"></div>
+        </div>
+      </div>
+      <!-- <div class="form-group">
+        <div class="label">
+          <label>网站LOGO：</label>
+        </div>
+        <div class="field">
+          <input type="text" id="url1" name="slogo" class="input tips" style="width:25%; float:left;" value="" data-toggle="hover" data-place="right" data-image=""  />
+          <input type="button" class="button bg-blue margin-left" id="image1" value="+ 浏览上传" >
+        </div>
+      </div> -->
+ <!--      <div class="form-group">
+        <div class="label">
+          <label>网站域名：</label>
+        </div>
+        <div class="field">
+          <input type="text" style="width: 250px;" class="input" name="surl" value="" />
+        </div>
+      </div> -->
+      
+      <div class="form-group">
+        <div class="label">
+          <label>网站关键字：</label>
+        </div>
+        <div class="field">
+          <textarea class="input"  style="width: 550px;"  id='keyword' name="keyword" >{$data['keyword']}</textarea>
+          <div class="tips"></div>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="label">
+          <label>网站描述：</label>
+        </div>
+        <div class="field">
+          <textarea class="input"  style="width: 550px;"  id='descript' name="descript">{$data['descript']}</textarea>
+          <div class="tips"></div>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="label">
+          <label>联系人：</label>
+        </div>
+        <div class="field">
+          <input type="text" style="width: 250px;" class="input" id='name' name="name" value="{$data['name']}" />
+          <div class="tips"></div>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="label">
+          <label>手机：</label>
+        </div>
+        <div class="field">
+          <input type="text" class="input" style="width: 250px;" id='tel' name="tel" value="{$data['tel']}" />
+          <div class="tips"></div>
+        </div>
+      </div>
+    
+      <div class="form-group">
+        <div class="label">
+          <label>QQ：</label>
+        </div>
+        <div class="field">
+          <input type="text" class="input" style="width: 250px;" id='qq' name="qq" value="{$data['qq']}" />
+          <div class="tips"></div>
+        </div>
+      </div>
+     
+              
+      <div class="form-group">
+        <div class="label">
+          <label>底部信息：</label>
+        </div>
+        <div class="field">
+          <textarea name="foot" style="width: 550px;"  id='foot' class="input" style="height:120px;">{$data['foot']}</textarea>
+          <div class="tips"></div>
+        </div>
+      </div>
+      <input type="hidden" name="id" value="{$data['id']}">
+      <div class="form-group">
+        <div class="label">
+          <label></label>
+        </div>
+        <div class="field">
+          <button class="button bg-main icon-check-square-o" type="submit"> 提交</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+</body></html>
+
+<script type="text/javascript">
+    function addsetup(){
+       if ($('#title').val() == '')
+        {
+           layer.msg("请输入标题");  return false;
+        }
+
+        return true;
+    }
+
+
+</script>

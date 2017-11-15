@@ -1,0 +1,228 @@
+ <!DOCTYPE html>
+<html lang="zh"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="renderer" content="webkit">
+</script>
+<title>{$data.domain}正在出售 - 来至[28米表]</title>
+<meta name="keywords" content="米表,28米表网,域名免费展示页,域名免费展示平台,免费米表程序,免费米表源码">
+<meta name="description" content="28米表网，国内首家域名云展示页平台，无需安装源码自建网站，一键创建属于自己的域名展示页，让你的域名快速被人发掘，提高成交率。">
+<link rel="stylesheet" type="text/css" href="{$Think.const.BOKE_STATIC_PATH}/home/default/css/style.css" />
+</head>
+<body>
+<a href="" class="templet-link"> </a>
+<div class="full-content-wrapper">
+  <!-- 头部部分 -->
+   <div class="header">
+    <div class="content clearfix">
+      <div class="left domain-name">
+        <p><a style="color: white;" href="http://{$admin['username']}.t28.cn">{$data['domain']}</a></p>
+      </div>
+      <div class="left whois">
+        <a href="https://whois.aliyun.com/whois/domain/{$data['domain']}?spm=5176.8076989.339865.135.kaSVzR&file={$data['domain']}" target="_blank">whois查询</a>
+      </div>
+      <div class="right">
+        您正在访问的域名可以转让！This domain is for sale.
+      </div>
+    </div>
+   </div>
+  <!-- 头部部分 -->
+  <!-- 内容部分 -->
+  <div class="content">
+    <div class="main-content">
+      <div class="domain-name-introduce">
+        <div class="title">域名介绍 
+          <div style="height: 40px;display: block; font-size:14px;float: right;line-height: 40px;"><a  href="/reg.html" target="_blank" >[免费开通我的域名展示页]</a></div>
+        </div>
+        <div class="details marLR-5">
+          <p>{$data['remark']}</p>
+        </div>
+      </div>
+      <div class="domain-name-introduce">
+        <div class="title">联系卖家 
+        </div>
+        <div class="details marLR-5">
+          <if condition="$admin['tel'] neq '0'">
+          <span style="font-weight: bold;">电话：{$admin['tel']}</span>
+          </if>
+          <if condition="$admin['qq'] neq '0' ">
+          <span style="margin-left: 20px;font-weight: bold;">QQ：{$admin['qq']}</span>
+          </if>
+          <if condition="$admin['email'] neq '0'">
+          <span style="margin-left: 20px;font-weight: bold;">邮箱：{$admin['email']}</span>
+          </if>
+        </div>
+      </div>
+      <div class="trade-information">
+        <div class="title">域名信息</div>
+        <div class="marLR-5">
+          <!-- 倒计时 -->
+          <p class="message">
+            <span class="text-left">交易类型 :</span>
+            <span class="text-right">一口价 </span>
+            <if condition="$data['price'] gt 0">
+            <span class="text-left">当前价格 : </span>
+            <span class="text-right"><strong class="domain_price">{$data['price']}</strong> </span>
+            </if>
+            <span class="text-left">域名年龄 : </span>
+            <span class="text-right"><?php
+            $time = diffDate($data['reg_time'],date('Y-m-d'));
+            echo $time['year'].'年零'.$time['month'].'个月';
+            ?></span>
+            <span class="text-left">域名到期时间 : </span>
+            <span class="text-right">{$data['exp_time']|substr=0,10}</span>
+            <a href="{$data['sale_url']}" target="_blank"><span class="look-button">购买地址</span></a>
+          </p>
+
+        </div>
+      </div>
+      <div class="shopkeeper-card" style="display: none;">
+        <div class="title">推荐域名</div>
+        <div class="marLR-5">
+   <ul class="clearfix"><li>
+                <div class="left domain-name">
+                  <a href="javascript:void(0);" target="_blank">t28.cn</a>
+                </div>
+                <div class="jieshao left">
+                  域名联盟
+                </div>
+              </li><li>
+                <div class="left domain-name">
+                  <a href="javascript:void(0);" target="_blank">t28.cn</a>
+                </div>
+                <div class="jieshao left">
+                  域名联盟
+                </div>
+              </li>
+
+              <li>
+                <div class="left domain-name">
+                  <a href="javascript:void(0);" target="_blank">t28.cn</a>
+                </div>
+                <div class="jieshao left">
+                  域名联盟
+                </div>
+              </li>
+
+              <li>
+                <div class="left domain-name">
+                  <a href="javascript:void(0);" target="_blank">t28.cn</a>
+                </div>
+                <div class="jieshao left">
+                  域名联盟
+                </div>
+              </li>
+
+
+              <li>
+                <div class="left domain-name">
+                  <a href="javascript:void(0);" target="_blank">t28.cn</a>
+                </div>
+                <div class="jieshao left">
+                  域名联盟
+                </div>
+              </li>
+
+              <li>
+                <div class="left domain-name">
+                  <a href="javascript:void(0);" target="_blank">t28.cn</a>
+                </div>
+                <div class="jieshao left">
+                  域名联盟
+                </div>
+              </li>
+
+
+              <li>
+                <div class="left domain-name">
+                  <a href="javascript:void(0);" target="_blank">t28.cn</a>
+                </div>
+                <div class="jieshao left">
+                  域名联盟
+                </div>
+              </li>
+
+
+              <li>
+                <div class="left domain-name">
+                  <a href="javascript:void(0);" target="_blank">t28.cn</a>
+                </div>
+                <div class="jieshao left">
+                  域名联盟
+                </div>
+              </li>
+
+
+              <li>
+                <div class="left domain-name">
+                  <a href="javascript:void(0);" target="_blank">t28.cn</a>
+                </div>
+                <div class="jieshao left">
+                  域名联盟
+                </div>
+              </li>
+
+
+              <li>
+                <div class="left domain-name">
+                  <a href="javascript:void(0);" target="_blank">t28.cn</a>
+                </div>
+                <div class="jieshao left">
+                  域名联盟
+                </div>
+              </li>
+
+
+              <li>
+                <div class="left domain-name">
+                  <a href="javascript:void(0);" target="_blank">t28.cn</a>
+                </div>
+                <div class="jieshao left">
+                  域名联盟
+                </div>
+              </li>
+
+
+              <li>
+                <div class="left domain-name">
+                  <a href="javascript:void(0);" target="_blank">t28.cn</a>
+                </div>
+                <div class="jieshao left">
+                  域名联盟
+                </div>
+              </li>
+
+
+              <li>
+                <div class="left domain-name">
+                  <a href="javascript:void(0);" target="_blank">t28.cn</a>
+                </div>
+                <div class="jieshao left">
+                  域名联盟
+                </div>
+              </li>
+
+
+              <li>
+                <div class="left domain-name">
+                  <a href="javascript:void(0);" target="_blank">t28.cn</a>
+                </div>
+                <div class="jieshao left">
+                  域名联盟
+                </div>
+              </li>
+              </ul>
+        </div>
+      </div>
+      <div class="footer">
+         <a href="http://{$admin['username']}.t28.cn" target="_blank"><span class="look-button">查看更多域名</span></a>
+      </div>
+      <div class="copyright">Copyright: 2016 www.t28.cn
+       <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1260606376'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s11.cnzz.com/stat.php%3Fid%3D1260606376%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));</script>
+      </div>
+    </div>
+  </div>
+
+
+
+</div>
+</body></html>

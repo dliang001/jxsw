@@ -1,0 +1,20 @@
+<?php
+namespace Manager\Controller;
+use Think\Controller;
+class bokeController extends Controller {
+	//id
+	public $MyId;
+	function __construct()
+	{
+		
+		if(!$_SESSION['admin']['id'] ){
+            redirect(U('Manager/Public/login'));
+        }
+		parent::__construct();
+		$this->MyId = $_SESSION['admin']['id'];
+
+        $this->catelist = M("cate")->where("isdel = 0")->select();
+
+
+	}
+}	

@@ -1,0 +1,22 @@
+<?php
+namespace Home\Controller;
+use Think\Controller;
+class IndexController extends BokeController {
+    
+
+    public function index(){
+            
+        //轮播图
+        $imgwhere = 'isdel = 0 and indeximg = 1';
+        $this->imglist = D("Article")->getArticleList($imgwhere,"id,title,pic,indeximg",'sort asc');
+        
+        $where = 'isdel = 0';
+        $count = D('Article')->where($where)->count(); //分页
+        $Page = new \Think\Page($count, 20);
+        $this->page = $Page->show();// 分页显示输出
+
+        $this->list = D("Article")->getArticleList($where, "*", "id desc", $Page->firstRow . ',' . $Page->listRows); 
+        $this->display(Template.'/Index/index');
+    }
+
+}

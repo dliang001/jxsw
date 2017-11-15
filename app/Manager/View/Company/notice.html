@@ -1,0 +1,173 @@
+<include file="Public/style" />
+<link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<div class="panel admin-panel">
+    <div class="panel-head"><strong class="icon-reorder"> 内容列表</strong> <a href="" style="float:right; display:none;">添加字段</a></div>
+    <div class="padding border-bottom">
+        <ul class="search" style="padding-left:10px;">
+            <li> <a class="button border-main icon-plus-square-o" href="{:U('Company/add',array('cid'=>21))}"> 添加内容</a> </li>
+            <form class="form-inline" role="form" action="{:u('Company/notice')}" method="get">
+                <input type="text" placeholder="请输入搜索关键字(标题/作者)" name="qstr" class="input" style="width:250px; line-height:14px;display:inline-block" value="{$qstr}" />
+                <button type="submit" class="button border-main icon-search">搜索</button>
+    </div>
+    </ul>
+</div>
+<td colspan="10">
+    <table class="table table-hover text-center">
+        <tr>
+             <th width="20%" style="text-align:left; padding-left:30px;">标题</th>
+            <th width="10%">作者</th>
+            <th width="15%">发布时间</th>
+            <th width="10%">审核状态</th>
+            <th width="10%">是否首页显示</th>
+            <th width="10%">是否置顶</th>
+            <th width="310">操作</th>
+        </tr>
+        <foreach name="list" item="v">
+            <tr>
+                <td style="text-align:left; padding-left:20px;">
+                    <!-- <input type="checkbox" name="id[]" value="{$v['id']}" /> -->
+                    {$v['title']}
+                </td>
+                <td>{$v['author']}</td>
+                <!-- <td width="10%"><img src="{$v['picurl'][0]['src']}" alt="" width="70" height="50" /></td> -->
+                <!-- <td><font color="#00CC99">{$v.cname}</font></td> -->
+                <td>{$v['createtime']}</td>
+                <td class="indext{$v['a_id']}">
+                    <switch name="v['type']">
+                        <case value="0"><span style="color:#045cf1;">审核中</span></case>
+                        <case value="1"><span style="color:#11bb0a;">已通过</span></case>
+                        <case value="2"><span style="color: red;">已驳回</span></case>
+                    </switch>
+                </td>
+                <td class="index{$v['a_id']}">
+                    <if condition="$v['isindex'] eq 1">
+                        是
+                        <else /> <span style="color: red;">否</span>
+                    </if>
+                </td>
+                <td class="indexs{$v['a_id']}">
+                    <if condition="$v['istop'] eq 1">
+                        是
+                        <else /> <span style="color: red;">否</span>
+                    </if>
+                </td>
+                <!-- <td><img style="height: 50px; width: 50px;" src="__ROOT__/Uploads/{$v['img']}"></td> -->
+                <td class="parent_btn{$v['a_id']}">
+                    <!-- 表示一个成功的或积极的动作 -->
+                    <if condition="$v['isindex'] eq 1">
+                        <button type="button" class="btn btn-success btn-sm index_btn{$v['a_id']}" onclick="editIndex({$v['a_id']},'0')">取消首页显示</button>
+                        <else />
+                        <button type="button" class="btn btn-success btn-sm index_btn{$v['a_id']}" onclick="editIndex({$v['a_id']},'1')">首页显示</button>
+                    </if>
+                    <if condition="$v['istop'] eq 1">
+                        <button type="button" class="btn btn-info btn-sm index_btns{$v['a_id']}" onclick="editistop({$v['a_id']},'0')">取消置顶</button>
+                        <else />
+                        <button type="button" class="btn btn-info btn-sm index_btns{$v['a_id']}" onclick="editistop({$v['a_id']},'1')">置顶</button>
+                    </if>
+                    <!-- 提供额外的视觉效果，标识一组按钮中的原始动作 -->
+                        <if condition="$v['type'] eq 0">
+                            <button type="button" class="btn btn-primary btn-sm index_btnt{$v['a_id']} " onclick="editType({$v['a_id']},'1')">审核</button>
+                        </if>
+                    <!-- 表示应谨慎采取的动作 -->
+                    <a href="{:U('Company/add',array('id'=>$v['a_id'],'cid'=>$v['cid']))}">
+                        <button type="button" class="btn btn-warning btn-sm">编辑</button>
+                    </a>
+                    <!-- 表示一个危险的或潜在的负面动作 -->
+                    <a href="{:U('Company/del',array('id'=>$v['a_id']))}">
+                        <button type="button" class="btn btn-danger btn-sm">删除</button>
+                    </a>
+                    <!-- 并不强调是一个按钮，看起来像一个链接，但同时保持按钮的行为 -->
+                    <!-- <div class="button-group"> <a class="button border-main" href="{:U('Admin/add')}?id={$v['id']}"><span class="icon-edit"></span> 修改</a> <a class="button border-red" href="{:U('Admin/del')}?id={$v['id']}"><span class="icon-trash-o"></span> 删除</a> </div> -->
+                </td>
+            </tr>
+        </foreach>
+    </table>
+    <div class="pagelist paging_bootstrap" style='text-align:center'>
+        <ul class="pagination">{$Page}</ul>
+    </div>
+    </div>
+    </body>
+    <script>
+    //操作首页是否显示  status参数为1设置置顶 参数为0设置不置顶
+    function editIndex(article_id, status) {
+        //alert(article_id);alert(status);
+        $.ajax({
+            url: '/boke/manager.php/Company/editIndexStatus',
+            data: { "status": status, "article_id": article_id },
+            dataType: "json",
+            type: 'post',
+            success: function(msg) {
+                if (msg.error == 0) { //修改成功
+                    if (status == '1') {
+                        $("[class=index" + article_id + "]").html('是');
+                        $(".index_btn" + article_id).remove();
+                        $("[class=parent_btn" + article_id + "]").prepend("<button type='button' class='btn btn-success btn-sm index_btn" + article_id + "' onclick='editIndex(" + article_id + ",0)'>取消首页显示</button>");
+
+                    } else {
+                        $("[class=index" + article_id + "]").html("<span style='color: red;'>否</span>");
+                        $(".index_btn" + article_id).remove();
+                        $("[class=parent_btn" + article_id + "]").prepend("<button type='button' class='btn btn-success btn-sm index_btn" + article_id + "' onclick='editIndex(" + article_id + ",1)'>首页显示</button>");
+
+                    }
+                } else { //修改失败
+                    alert(msg['msg']);
+                }
+
+            }
+        });
+    }
+    //操作首页是否显示  status参数为1设置置顶 参数为0设置不置顶
+    function editistop(article_id, status) {
+        //alert(article_id);alert(status);
+        $.ajax({
+            url: '/boke/manager.php/Company/notice_editistop',
+            data: { "status": status, "article_id": article_id },
+            dataType: "json",
+            type: 'post',
+            success: function(msg) {
+                if (msg.error == 0) { //修改成功
+                    if (status == '1') {
+                        $("[class=indexs" + article_id + "]").html('是');
+                        $(".index_btns" + article_id).remove();
+                        $("[class=parent_btn" + article_id + "]").prepend("<button type='button' class='btn btn-info btn-sm index_btns" + article_id + "' onclick='editistop(" + article_id + ",0)'>取消置顶</button>");
+
+                    } else {
+                        $("[class=indexs" + article_id + "]").html("<span style='color: red;'>否</span>");
+                        $(".index_btns" + article_id).remove();
+                        $("[class=parent_btn" + article_id + "]").prepend("<button type='button' class='btn btn-info btn-sm index_btns" + article_id + "' onclick='editistop(" + article_id + ",1)'>置顶</button>");
+
+                    }
+                } else { //修改失败
+                    alert(msg['msg']);
+                }
+
+            }
+        });
+    }
+     //操作首页是否显示  status参数为1设置置顶 参数为0设置不置顶
+    function editType(article_id, status) {
+        //alert(article_id);alert(status);
+        $.ajax({
+            url: '/boke/manager.php/Company/auditing',
+            data: { "status": status, "article_id": article_id },
+            dataType: "json",
+            type: 'post',
+             success: function(msg) {
+                if (msg.error == 0) { //修改成功
+                    if (status == '1') {
+                        $("[class=indext" + article_id + "]").html("<span style='color:#11bb0a;'>已通过</span>");
+                        $(".index_btnt" + article_id).remove();
+                        
+                    }
+                } else { //修改失败
+                    alert(msg['msg']);
+                }
+
+            }
+        });
+    }
+    </script>
+
+    </html>

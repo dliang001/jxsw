@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <link rel="stylesheet" href="/static/manager/css/pintuer.css">
+    <link rel="stylesheet" href="/static/manager/css/admin.css">
+    <script src="/static/manager/js/jquery.js"></script>   
+    <script type="text/javascript" src="/static/manager/js/jquery-1.7.2.min.js"></script>
+	<script type="text/javascript" src="/static/manager/js/common.js"></script>
+	<script type="text/javascript" src="/static/manager/js/layer/layer.js"></script>
+	<script type="text/javascript" src="/static/manager/js/select.js"></script>
+</head>
+
+<body>
+<div class="panel admin-panel">
+  <div class="panel-head"><strong><span class="icon-pencil-square-o"></span> 网站信息</strong></div>
+  <div class="body-content">
+    <form method="post" class="form-x" action="/manager.php/Admin/setup" onsubmit="return addsetup();">
+      <div class="form-group">
+        <div class="label">
+          <label>网站标题：</label>
+        </div>
+        <div class="field">
+          <input type="text" style="width: 250px;" class="input" id='title' name="title" value="李宗洋博客" />
+          <div class="tips"></div>
+        </div>
+      </div>
+      <!-- <div class="form-group">
+        <div class="label">
+          <label>网站LOGO：</label>
+        </div>
+        <div class="field">
+          <input type="text" id="url1" name="slogo" class="input tips" style="width:25%; float:left;" value="" data-toggle="hover" data-place="right" data-image=""  />
+          <input type="button" class="button bg-blue margin-left" id="image1" value="+ 浏览上传" >
+        </div>
+      </div> -->
+ <!--      <div class="form-group">
+        <div class="label">
+          <label>网站域名：</label>
+        </div>
+        <div class="field">
+          <input type="text" style="width: 250px;" class="input" name="surl" value="" />
+        </div>
+      </div> -->
+      
+      <div class="form-group">
+        <div class="label">
+          <label>网站关键字：</label>
+        </div>
+        <div class="field">
+          <textarea class="input"  style="width: 550px;"  id='keyword' name="keyword" >李宗洋博客,博客,李宗洋,PHP技术博客,Linux技术博客,C语言技术博客,C++技术博客,MySQL技术博客,Javascript技术博客</textarea>
+          <div class="tips"></div>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="label">
+          <label>网站描述：</label>
+        </div>
+        <div class="field">
+          <textarea class="input"  style="width: 550px;"  id='descript' name="descript">李宗洋博客 - 关注于PHP,Linix,Python,MySQL,Javascript技术开发，分享学习之路上的点点滴滴。</textarea>
+          <div class="tips"></div>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="label">
+          <label>联系人：</label>
+        </div>
+        <div class="field">
+          <input type="text" style="width: 250px;" class="input" id='name' name="name" value="李宗洋" />
+          <div class="tips"></div>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="label">
+          <label>手机：</label>
+        </div>
+        <div class="field">
+          <input type="text" class="input" style="width: 250px;" id='tel' name="tel" value="15890670071" />
+          <div class="tips"></div>
+        </div>
+      </div>
+    
+      <div class="form-group">
+        <div class="label">
+          <label>QQ：</label>
+        </div>
+        <div class="field">
+          <input type="text" class="input" style="width: 250px;" id='qq' name="qq" value="1638500136" />
+          <div class="tips"></div>
+        </div>
+      </div>
+     
+              
+      <div class="form-group">
+        <div class="label">
+          <label>底部信息：</label>
+        </div>
+        <div class="field">
+          <textarea name="foot" style="width: 550px;"  id='foot' class="input" style="height:120px;">李宗洋博客 版权所有，保留一切权利  京ICP备16055311   托管于 阿里云 联系QQ1639500136</textarea>
+          <div class="tips"></div>
+        </div>
+      </div>
+
+        <div class="form-group">
+          <div class="label">
+            <label>首页特效</label>
+          </div>
+          <div class="field">
+            <select name="indextype" class="input w50">
+                <option  value="0"  >开启</option>
+                <option  value="1" selected >关闭</option>
+            </select>
+            <div class="tips" style="color: #00aaee;">注：进入首页的旋转特效界面</div>
+          </div>
+        </div>
+
+
+      <input type="hidden" name="id" value="1">
+      <div class="form-group">
+        <div class="label">
+          <label></label>
+        </div>
+        <div class="field">
+          <button class="button bg-main icon-check-square-o" type="submit"> 提交</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+</body></html>
+
+<script type="text/javascript">
+    function addsetup(){
+       if ($('#title').val() == '')
+        {
+           layer.msg("请输入标题");  return false;
+        }
+
+        return true;
+    }
+
+
+</script>

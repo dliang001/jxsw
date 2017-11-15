@@ -1,0 +1,39 @@
+<?php
+namespace Home\Controller;
+use Think\Controller;
+class BokeController extends Controller {
+	//id
+	public $MyId;
+	//domain
+	public  $domain;
+	
+	function __construct()
+	{
+		
+		parent::__construct();
+		$this->MyId   = session('id');
+		if (get_domain2() == 'admin')
+		{
+			$url = 'http://'.$_SERVER['HTTP_HOST'].__ROOT__.'/manager.php';
+            header("Location:$url");exit;
+		}
+		//获取分类
+        $this->cate = genTree(D("Article")->getCateData());
+         //随机2条数据
+        $randwhere = "isdel = 0 ";
+      	$this->randlist = D("Article")->getArticleList($randwhere,'','rand()',2);
+        $this->setup = M("setup")->where("id =1 ")->find();
+        //友情
+        $this->listyouqing = M("youqing")->cache(864000)->select();
+        
+        $this->ac_name =  CONTROLLER_NAME;
+        $this->acname = D("cate")->where("url like '%{$this->ac_name}%' ")->cache(864000)->field("name")->find();//getCateData();
+
+	}
+    
+
+    // public function index(){
+    	
+    //     $this->display();
+    // }
+}	

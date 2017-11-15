@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>添加域名</title>
+<script type="text/javascript" src="{$Think.const.BOKE_STATIC_PATH}/manager/js/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="{$Think.const.BOKE_STATIC_PATH}/manager/js/common.js"></script>
+<script type="text/javascript" src="{$Think.const.BOKE_STATIC_PATH}/manager/js/layer/layer.js"></script>
+<link rel="stylesheet" href="{$Think.const.BOKE_STATIC_PATH}/manager/js/layer-ui/css/layui.css">
+<style>
+body{padding: 10px;}
+</style>
+</head>
+<body >
+<form style="padding-top: 20px;" id="add_domain_form" class="layui-form layui-form-pane1" action="" onsubmit="return add_domain()">
+  <div class="layui-form-item">
+    <label class="layui-form-label">域名</label>
+    <div class="layui-input-inline">
+      <input type="text" name="domain" id="domain" lay-verify="title" placeholder="请输入域名" autocomplete="off" onkeyup="this.value=this.value.replace(/[^0-9.|a-z.]/g,'')" onblur="check_domain(this)" value="{$data['domain']}"  class="layui-input">
+    </div>
+    <div class="layui-form-mid layui-word-aux">域名不允许带 http:// 和  www，正确的格式为： abc.com</div>
+  </div>
+  <div class="layui-form-item">
+    <div class="layui-inline">
+      <label class="layui-form-label">价格</label>
+      <div class="layui-input-inline">
+        <input type="text" name="price" onkeyup="this.value=this.value.replace(/[^0-9.]/g,'')" id="price" placeholder="￥" autocomplete="off" class="layui-input" value="{$data['price']}">
+      </div>
+      
+    </div>
+    <div class="layui-inline">
+      <label class="layui-form-label">币种</label>
+      <div class="layui-input-block">
+          <select id="money_type" name="money_type">
+          <foreach name="money_type" item="v">
+          <option value="{$v.remark}" <if condition="$data['money_type'] eq $v['remark']"> selected </if> > {$v.name}</option>
+          </foreach>
+          </select>
+      </div>
+    </div>
+  </div>
+  <div class="layui-form-item">
+    <label class="layui-form-label">分类</label>
+    <div class="layui-input-inline">
+        <select name="cate_id" id="money_type" style="margin-left: 10px;">
+          <foreach name="cate" item="v">
+            <option value="{$v.id}"  <if condition="$data['cate_id'] eq $v['id']"> selected </if>>{$v.name}</option>
+            <foreach name="v['child']" item="c">
+              <option value="{$c.id}" <if condition="$data['cate_id'] eq $c['id']"> selected </if>  >&nbsp;&nbsp;|-{$c.name}</option>
+          </foreach>
+          </foreach>
+        </select>
+    </div>
+    <div class="layui-form-mid layui-word-aux">选择一个精确的分类让容易让客户搜索到。</div>
+  </div>
+ 
+
+  <div class="layui-form-item">
+    <label class="layui-form-label">出售状态</label>
+    <div class="layui-input-block">
+      <foreach name="sale_status" k="k" item="v">
+        <input  type="radio" name="sale_status" <if condition="$v['id'] eq 2 " >checked </if> <if condition="$data['sale_status'] eq $v['id']"> checked</if>  value="{$v.id}" title="{$v.name}"> 
+        </foreach>
+    </div>
+  </div>
+  <div class="layui-form-item">
+    <label class="layui-form-label">出售方式</label>
+    <div class="layui-input-block">
+        <foreach name="sale_type" k="k" item="v">
+        <input  type="radio" name="sale_type" <if condition="$v['id'] eq 8 " >checked </if> <if condition="$data['sale_type'] eq $v['id']">checked</if>  value="{$v.id}" title="{$v.name}"> 
+        </foreach>
+    </div>
+  </div>
+  <div class="layui-form-item">
+    <label class="layui-form-label">出售链接</label>
+    <div class="layui-input-block">
+      <input type="text" name="sale_url" style="width:500px;" id="sale_url" lay-verify="title" placeholder="请填写域名商平台出售链接(可选)" autocomplete="off"  class="layui-input" value="{$data['sale_url']}">
+    </div>
+  </div>
+  <div class="layui-form-item layui-form-text">
+    <label class="layui-form-label">备注</label>
+    <div class="layui-input-block">
+      <textarea placeholder="请输入备注内容"  id="remark" style="width:500px;" name="remark" class="layui-textarea">{$data['remark']}</textarea>
+    </div>
+  </div>
+  <input type="hidden" name="id" value="{$data['id']}">
+  <div class="layui-form-item">
+    <div class="layui-input-block">
+      <button class="layui-btn" id="submit"  lay-submit lay-filter="*">立即提交</button>
+    </div>
+  </div>
+</form>
+
+<script src="{$Think.const.KFCMS_STATIC_PATH}/manager/js/layer-ui/layui.js"></script>
+<script>
+
+layui.use('form', function(){
+  var form = layui.form();
+});
+
+
+//监听提交
+function add_domain()
+{
+  var index  = parent.layer.getFrameIndex(window.name); //获取窗口索引
+  var domain = $('#domain').val();
+  var data   = $('#add_domain_form').serialize();
+
+  if (domain == '')
+  {
+    layer.msg("请填写域名"); return false;
+  }
+
+  submit('submit', '正在提交..');
+
+  $.post(
+    '{:U("Domain/add_domain")}',data,
+    function(rs)
+    {
+        $('#domain').val('');
+        parent.layer.msg(rs.msg);
+        parent.window.location.reload();
+        parent.layer.close(index);
+    },'json'
+  );
+  return false;
+}
+
+//检测域名
+function check_domain(_this)
+{
+    $.post(
+      '{:U("Domain/check_domain")}',
+      {domain:$(_this).val()},
+      function(rs)
+      {
+          $('#domain').val(rs.val);
+          if (rs.msg)
+          {
+              layer.msg(rs.msg);
+          }
+      },'json'
+    );
+}
+
+</script>
+</body>
+</html>

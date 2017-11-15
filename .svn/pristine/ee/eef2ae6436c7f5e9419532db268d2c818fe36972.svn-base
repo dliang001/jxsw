@@ -1,0 +1,165 @@
+<include file="Default/Index/header" />
+    <link type="text/css" rel="stylesheet" href="{$Think.const.BOKE_STATIC_PATH}/home/default/js/styles/shCore.css"/> <!--核心样式表(必选)-->
+    <link type="text/css" rel="stylesheet" href="{$Think.const.BOKE_STATIC_PATH}/home/default/js/styles/shThemeEmacs.css"/> <!--主题样式表(多重样式选一)-->
+    <script type="text/javascript" src="{$Think.const.BOKE_STATIC_PATH}/home/default/js/scripts/shCore.js"></script> <!--核心js脚本(必选)-->
+    <script type="text/javascript" src="{$Think.const.BOKE_STATIC_PATH}/home/default/js/scripts/shBrushBash.js"></script> <!--"Shell"脚本高亮规则js (必选,你的代码是什么语言的,就选什么js脚本-->
+   <script type="text/javascript" src="{$Think.const.BOKE_STATIC_PATH}/home/default/js/scripts/shBrushPhp.js"></script>
+   
+
+    <script type="text/javascript">
+        SyntaxHighlighter.all(); //通过该js脚本来进行高亮处理;
+
+    </script>
+ <style type="text/css">
+
+    .article-content h2{
+      background-color: #e5e5e5;
+    } 
+ 
+   
+   .issue-wrap-gw{
+  background-color: #2a2a2a;
+  }
+  .build-floor-gw{
+  background-color: #2a2a2a;
+
+  }
+
+ </style>
+<section class="container">
+  <div class="speedbar">
+    <div class="toptip"><strong class="text-success"><i class="fa -up"></i> </strong></div>
+  </div>
+<div class="content-wrap">
+  <div class="content">
+<!-- 
+    <header class="archive-header">
+     <h1 ><i class="fa fa-folder-open"></i><span style="font-size: 19px;">分类：PHP</span> <a title="订阅搜索引擎" target="_blank" href="search/feed.rss"><i class="rss fa fa-rss"></i></a></h1>
+    </header> -->
+
+
+  <div class="content-wrap">
+    <header class="article-header">
+     <h1 class="article-title"><a   style=" font-size: 25px;" href="<php>echo detaurl(deta,$data[0]['id']);</php>">{$data[0]['title']}</a></h1>
+     <div class="meta"> 
+      <span id="mute-category" class="muted">分类：<i class="fa "></i><a href="/{$data[0]['cname']}"> {$data[0]['cname']}</a></span> 
+      <!-- <span class="muted"><i class="fa fa-user"></i> 李洋</span>  -->
+      <time class="muted">发布时间：<i class="fa "></i> {$data[0]['createtime']}</time> 
+      <span class="muted" >热度：<i class="fa "></i>{$data[0]['viewnum']}℃</span> 
+      <!-- <span class="muted"><i class="fa fa-comments-o"></i> <a href="">10评论</a></span> -->
+     </div>
+    </header>
+     
+
+
+
+
+    <article class="article-content" >
+    
+     <div class="brush:php;"><php>echo htmlspecialchars_decode($data[0]['content']); </php></div>
+     
+     <p>转载请注明：<a href="{:U('/Index')}">李洋博客</a> &raquo; <a href="<php>echo detaurl(deta,$data[0]['id']);</php>">{$data[0]['title']}</a></p>
+     <div class="open-message">
+      <i class="fa "></i> 如果你觉得这篇文章或者我分享的主题对你有帮助，请支持我继续更新网站和主题 ！
+      <a style="float:right;text-indent: 0;" href="pay.html" title="捐赠本站" target="_blank">捐赠本站</a>
+
+     </div>
+    
+
+
+
+     <div class="article-social"> 
+      <!-- JiaThis Button BEGIN -->
+      <div class="jiathis_style">
+        <span class="jiathis_txt">分享到：</span>
+        <a class="jiathis_button_qzone">QQ空间</a>
+        <a class="jiathis_button_tsina">新浪微博</a>
+        <a class="jiathis_button_tqq">腾讯微博</a>
+        <a class="jiathis_button_weixin">微信</a>
+        <a href="http://www.jiathis.com/share?uid=2118782" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+        <a class="jiathis_counter_style"></a>
+      </div>
+      <script type="text/javascript">
+      var jiathis_config = {data_track_clickback:'true'};
+      </script>
+      <script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=2118782" charset="utf-8"></script>
+      <!-- JiaThis Button END -->
+     </div>
+    </article>
+
+    <footer class="article-footer">
+     <div class="article-tags">
+      <i class="fa "></i>
+      <a href="tag/php.html" rel="tag">{$type}</a>
+     </div>
+    </footer>
+    
+    <div class="related_top">
+     <div class="related_posts"> 
+     <!--  <script type="text/javascript">/*PC 原生智能2016-01-14*/ 
+     var cpro_id = "u2492229";</script> 
+      <script src="http://cpro.baidustatic.com/cpro/exp/propose_ad/spp.js" type="text/javascript"></script>  -->
+      <ul class="related_img">
+      <foreach name="detalist" item='v'>
+   
+       <li class="related_box"> 
+        <a href="<php>echo detaurl(deta,$v['id']);</php>" title="{$v['title']}" target="_blank">
+        <img style='width: 184px; height: 110px;' src="{$v['picurl'][0]['src']}" alt="{$v['title']}" />
+         <br />
+         <span class="r_title">{$v['title']}</span></a>
+        </li>
+      </foreach>
+
+       
+      </ul>
+      <div class="relates" >
+       <ul style="">
+       
+        <foreach name="detalistfoot" item='v'>
+          <li><i class="fa fa-minus"></i><a href="<php>echo detaurl(deta,$v['id']);</php>">{$v['title']}</a></li>
+        </foreach>
+
+       </ul>
+      </div>
+     </div>
+    </div>
+    <!--PC和WAP自适应版-->
+<div id="SOHUCS" sid="{$data[0]['id']}" ></div> 
+<script type="text/javascript"> 
+(function(){ 
+var appid = 'cysGD8dv2'; 
+var conf = '5234785fae21e202416fd536b566f7c3'; 
+var width = window.innerWidth || document.documentElement.clientWidth; 
+if (width < 960) { 
+window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="http://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>'); } else { var loadJs=function(d,a){var c=document.getElementsByTagName("head")[0]||document.head||document.documentElement;var b=document.createElement("script");b.setAttribute("type","text/javascript");b.setAttribute("charset","UTF-8");b.setAttribute("src",d);if(typeof a==="function"){if(window.attachEvent){b.onreadystatechange=function(){var e=b.readyState;if(e==="loaded"||e==="complete"){b.onreadystatechange=null;a()}}}else{b.onload=a}}c.appendChild(b)};loadJs("http://changyan.sohu.com/upload/changyan.js",function(){window.changyan.api.config({appid:appid,conf:conf})}); } })(); </script>
+
+
+
+<!-- UY BEGIN -->
+<!-- <div id="uyan_frame"></div> -->
+<!-- <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2118782"></script> -->
+<!-- UY END -->
+  
+   </div>
+  </div>
+ </body>
+</html>
+
+<style type="text/css">
+.module-hot-topic .clear-g{
+  display: none;
+}
+.module-cmt-footer{
+  display: none;
+
+}
+
+
+</style>
+</div>
+</div>
+
+<include file="Default/Index/left" />
+
+</section>
+<include file="Default/Index/footer" />

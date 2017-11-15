@@ -1,0 +1,102 @@
+		<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="renderer" content="webkit">
+    <title>后台管理中心</title>  
+    <!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <link rel="stylesheet" href="/static/manager/css/pintuer.css">
+    <link rel="stylesheet" href="/static/manager/css/admin.css">
+    <script src="/static/manager/js/jquery.js"></script>   
+    <script type="text/javascript" src="/static/manager/js/jquery-1.7.2.min.js"></script>
+	<script type="text/javascript" src="/static/manager/js/common.js"></script>
+	<script type="text/javascript" src="/static/manager/js/layer/layer.js"></script>
+	<script type="text/javascript" src="/static/manager/js/select.js"></script>
+</head>
+</head>
+<body style="background-color:#f2f9fd;">
+<div class="header bg-main">
+  <div class="logo margin-big-left fadein-top">
+    <h1><img src="/static/manager/images/y.jpg" class="radius-circle rotate-hover" height="50" alt="" />lizongyang 后台管理中心</h1>
+  </div>
+  <div class="head-l">
+  <a class="button button-little bg-green" href="/Index" target="_blank"><span class="icon-home"></span> 前台首页</a>
+   &nbsp;&nbsp;<a href="JavaScript:void(0);" onclick="qccache();" class="button button-little bg-blue"><span class="icon-wrench"></span> 清除缓存</a> 
+   &nbsp;&nbsp;<a class="button button-little bg-red" href="/manager.php/Public/logout"><span class="icon-power-off"></span> 退出登录</a> </div>
+</div>
+<script type="text/javascript">
+  
+// 清除缓存
+function qccache(){
+  var id = 1;
+  layer.confirm('确认要清除缓存？', {icon: 3, title:''}, function(index){
+      $.post(
+            '/manager.php/Public/usecache',{id:id},
+            function(rs)
+            {
+                if (rs ==1)
+                {
+                    layer.msg("清除缓存成功！");
+                     setTimeout(function(){window.location.reload();},1000);
+                }else{
+                    layer.msg("没有数据缓存可以清理！");
+
+                }
+            },'json'
+          );
+    });
+ } 
+</script>
+		<div class="leftnav">
+  <div class="leftnav-title"><strong><span class="icon-list"></span>菜单列表</strong></div>
+
+     <h2><span class="icon-cog"></span>系统设置</h2>
+           <ul >
+               <li><a href="/manager.php/Admin/index" target="right"><span class="icon-caret-right"></span>网站设置</a></li><li><a href="/manager.php/Admin/youqing" target="right"><span class="icon-caret-right"></span>友情连接</a></li><li><a href="/manager.php/Admin/visitor" target="right"><span class="icon-caret-right"></span>访客记录</a></li>
+           </ul><h2><span class="icon-users"></span>权限控制</h2>
+           <ul >
+               <li><a href="/manager.php/Admin/action" target="right"><span class="icon-caret-right"></span>菜单管理</a></li><li><a href="/manager.php/Admin/group" target="right"><span class="icon-caret-right"></span>用户组管理</a></li><li><a href="/manager.php/Admin/user" target="right"><span class="icon-caret-right"></span>管理员</a></li>
+           </ul><h2><span class="icon-th"></span>文章管理</h2>
+           <ul >
+               <li><a href="/manager.php/Admin/arlist" target="right"><span class="icon-caret-right"></span>文章列表</a></li><li><a href="/manager.php/admin/add" target="right"><span class="icon-caret-right"></span>添加文章</a></li>
+           </ul><h2><span class="icon-cloud"></span>数据管理</h2>
+           <ul >
+               <li><a href="/manager.php/Bak/index" target="right"><span class="icon-caret-right"></span>数据库备份</a></li>
+           </ul><h2><span class="icon-"></span>采集管理</h2>
+           <ul >
+               <li><a href="/manager.php/Collection/index" target="right"><span class="icon-caret-right"></span>采集列表</a></li>
+           </ul>
+ 
+ 
+ 
+</div>
+<script type="text/javascript">
+$(function(){
+  $(".leftnav h2").click(function(){
+	  $(this).next().slideToggle(200);	
+	  $(this).toggleClass("on"); 
+  })
+  $(".leftnav ul li a").click(function(){
+	    $("#a_leader_txt").text($(this).text());
+  		$(".leftnav ul li a").removeClass("on");
+		$(this).addClass("on");
+  })
+});
+</script>
+<ul class="bread">
+  <li><a href="/manager.php/Index/info" target="right" class="icon-home"> 首页</a></li>
+  <li><a href="##" id="a_leader_txt">网站信息</a></li>
+  <!-- <li><b>当前语言：</b><span style="color:red;">中文</php></span>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;切换语言：<a href="##">中文</a> &nbsp;&nbsp;<a href="##">英文</a> </li> -->
+</ul>
+<div class="admin">
+  <iframe scrolling="auto" rameborder="0" src="/manager.php/Admin/index" name="right" width="100%" height="100%"></iframe>
+</div>
+<div style="text-align:center;">
+</div>
+</body>
+</html>

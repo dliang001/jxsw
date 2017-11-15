@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="zh"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="renderer" content="webkit">
+</script>
+<title>28米表网 免费一键创建属于自己的云域名展示页</title>
+<meta name="keywords" content="米表,28米表网,域名免费展示页,域名免费展示平台,免费米表程序,免费米表源码">
+<meta name="description" content="28米表网，国内首家域名云展示页平台，无需安装源码自建网站，一键创建属于自己的域名展示页，让你的域名快速被人发掘，提高成交率。">
+<link rel="stylesheet" type="text/css" href="{$Think.const.BOKE_STATIC_PATH}/home/default/css/style.css" />
+</head>
+<body>
+<a href="" class="templet-link"> </a>
+<div class="full-content-wrapper">  
+  <!-- 头部部分 -->
+   <div class="header">
+    <div class="content clearfix">
+      <div class="left domain-name">
+        <p><a style="color: white;" href="/"> 28米表网</a></p>
+      </div>
+      <div class="left whois">
+        <a href="javascript:;" target="_blank">一个免费的域名展示平台</a>
+      </div>
+      <div class="right">
+        <a href="/reg.html" style="color:white;" target="_blank"> 免费创建域名展示页</a>
+      </div>
+    </div>
+   </div>
+  <!-- 头部部分 -->
+  <!-- 内容部分 -->
+  <div class="content">
+    <div class="main-content">
+      
+      <div class="domain-name-introduce">
+        <div class="title">联系卖家 
+        </div>
+        <div class="details marLR-5">
+          <if condition="$admin['tel'] neq '0'">
+          <span style="font-weight: bold;">电话：{$admin['tel']}</span>
+          </if>
+          <if condition="$admin['qq'] neq '0' ">
+          <span style="margin-left: 20px;font-weight: bold;">QQ：{$admin['qq']}</span>
+          </if>
+          <if condition="$admin['email'] neq '0'">
+          <span style="margin-left: 20px;font-weight: bold;">邮箱：{$admin['email']}</span>
+          </if>
+        </div>
+      </div>
+      <foreach name="list" item="v">
+      <div class="shopkeeper-card">
+        <div class="title">{$v.name}</div>
+        <div class="marLR-5">
+        <ul class="clearfix">
+              <foreach name="v['domain_list']" item="d">
+              <li>
+                <div class="left domain-name">
+                  <a href="http://{$d.domain}" target="_blank">{$d.domain}</a>
+                </div>
+                <div class="jieshao left">{$d.remark}</div>
+              </li>
+              </foreach>
+        </ul>
+        </div>
+      </div>
+
+      </foreach>
+
+      <div class="footer">
+         
+      </div>
+      <div class="copyright">Copyright: 2016 www.t28.cn
+       <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1260606376'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s11.cnzz.com/stat.php%3Fid%3D1260606376%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));</script>
+      </div>
+    </div>
+  </div>
+
+
+
+</div>
+</body></html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="renderer" content="webkit">
+    <title>后台管理中心</title>  
+    <include file='Public/style' />
+</head>
+<body style="background-color:#f2f9fd;">
+<div class="header bg-main">
+  <div class="logo margin-big-left fadein-top">
+    <h1><img src="{$Think.const.BOKE_STATIC_PATH}/manager/images/y.jpg" class="radius-circle rotate-hover" height="50" alt="" />{$Think.session.admin.username}后台管理中心</h1>
+  </div>
+  <div class="head-l">
+  <a class="button button-little bg-green" href="/Index" target="_blank"><span class="icon-home"></span> 前台首页</a>
+   &nbsp;&nbsp;<a href="JavaScript:void(0);" onclick="qccache();" class="button button-little bg-blue"><span class="icon-wrench"></span> 清除缓存</a> 
+   &nbsp;&nbsp;<a class="button button-little bg-red" href="{:U('Public/logout')}"><span class="icon-power-off"></span> 退出登录</a> </div>
+</div>
+<script type="text/javascript">
+  
+// 清除缓存
+function qccache(){
+  var id = 1;
+  layer.confirm('确认要清除缓存？', {icon: 3, title:''}, function(index){
+      $.post(
+            '{:U("Public/usecache")}',{id:id},
+            function(rs)
+            {
+                if (rs ==1)
+                {
+                    layer.msg("清除缓存成功！");
+                     setTimeout(function(){window.location.reload();},1000);
+                }else{
+                    layer.msg("没有数据缓存可以清理！");
+
+                }
+            },'json'
+          );
+    });
+ } 
+</script>

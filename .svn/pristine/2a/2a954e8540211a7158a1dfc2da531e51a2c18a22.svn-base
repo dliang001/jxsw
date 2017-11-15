@@ -1,0 +1,21 @@
+<?php
+namespace Home\Controller;
+use Think\Controller;
+class MysqlController extends BokeController {
+    /***
+     *  desc    mysql首页
+     *  Author  lizongyang
+     ***/
+
+    public function index(){
+        
+        $where = "isdel = 0 and cid = '".C('mysql')."' ";
+        
+        $this->list = D("Article")->getArticleList($where);
+
+        $this->type = M("cate")->where("id = '".C('mysql')."'")->getField("name");
+
+        $this->display(Template.'/Mysql/index');
+    }
+    
+}

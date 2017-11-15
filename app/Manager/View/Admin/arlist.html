@@ -1,0 +1,102 @@
+<include file="Public/style" />
+  <div class="panel admin-panel">
+    <div class="panel-head"><strong class="icon-reorder"> 内容列表</strong> <a href="" style="float:right; display:none;">添加字段</a></div>
+    <div class="padding border-bottom">
+      <ul class="search" style="padding-left:10px;">
+        <li> <a class="button border-main icon-plus-square-o" href="{:U('Admin/add')}"> 添加内容</a> </li>
+    
+        <form class="form-inline" role="form" action="{:u('Admin/arlist')}" method="get">
+              <!--     <select name="cate" class="input" onchange="changesearch()" style="width:160px; line-height:14px; display:inline-block">
+                  <option value="">请选择分类</option>
+                  <foreach name='cate' item='v'>
+                  <if condition="$id lt 5 ">value1
+                  <else /><option value="{$v.id}">{$v['name']}</option>
+                  </if>   
+                  </foreach>
+                </select> -->
+                <select name="cate" class="input" style="width:160px; line-height:14px; display:inline-block" >
+                        <option selected="selected" value="0">
+                          请选择分类
+                        </option>
+                        <volist name='catelist' id='v'>
+                          <if condition="$cate eq $v['cate_id'] ">
+
+                            <option selected="selected" value="{$v['cate_id']}">
+                              {$v['name']}
+                            </option>
+                            <else/>
+                            <option value="{$v['cate_id']}">
+                              {$v['name']}
+                            </option>
+                          </if>
+                        </volist>
+                      </select>
+
+                    <input type="text" placeholder="请输入搜索关键字" name="qstr" class="input" style="width:250px; line-height:14px;display:inline-block" value="{$qstr}" />
+
+
+
+                      <button type="submit" class="button border-main icon-search">搜索</button>
+
+
+                  </div>
+      </ul>
+
+    </div>
+  <td colspan="10">
+    <table class="table table-hover text-center">
+      
+      <tr>
+              <div class="pagelist paging_bootstrap" style='text-align:center'>
+              <ul class="pagination">{$Page}</ul>
+              </div>
+
+        <th width="100" style="text-align:left; padding-left:20px;">ID</th>
+        <th>标题</th>
+        <!-- <th>图片</th> -->
+        <th>分类名称</th>
+
+        <th width="10%">添加时间</th>
+        <th width="10%">缩略图</th>
+        <th width="10%">描述</th>
+
+        <th width="310">操作</th>
+      </tr>
+
+     
+      <foreach name="list" item="v">
+
+        <tr>
+          <td style="text-align:left; padding-left:20px;">
+            <!-- <input type="checkbox" name="id[]" value="{$v['id']}" /> -->
+            {$v['id']}
+            </td>
+          <td>{$v['title']}</td>
+          <!-- <td width="10%"><img src="{$v['picurl'][0]['src']}" alt="" width="70" height="50" /></td> -->
+          <!-- <td><font color="#00CC99">{$v.cname}</font></td> -->
+          <td>{$v['name']}</td>
+          
+          <td>{$v['createtime']}</td>
+          <td><img style="height: 50px; width: 50px;" src="__ROOT__/Uploads/{$v['img']}"></td>
+          <td>{$v['desc']}</td>
+
+
+
+
+          <td><div class="button-group"> <a class="button border-main" href="{:U('Admin/add')}?id={$v['id']}"><span class="icon-edit"></span> 修改</a> <a class="button border-red" href="{:U('Admin/del')}?id={$v['id']}"><span class="icon-trash-o"></span> 删除</a> </div></td>
+        </tr>
+       </foreach>
+
+       <tr>
+          <td colspan="10">
+          <div class="pagelist paging_bootstrap" style='text-align:center'>
+          <ul class="pagination">{$page}</ul>
+          </div>
+          </td>
+        </tr>
+     
+    </table>
+  </div>
+
+</body>
+</html>

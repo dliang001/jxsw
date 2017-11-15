@@ -1,0 +1,83 @@
+<footer class="footer">
+	<div class="footer-inner">
+		<div class="copyright pull-left">
+			{$setup['foot']}
+			<script src="{$Think.const.BOKE_STATIC_PATH}/home/default/js/jquery-1.11.3.min.js"></script>         <!-- jQuery (https://jquery.com/download/) -->
+        <script src="{$Think.const.BOKE_STATIC_PATH}/home/default/js/jquery.magnific-popup.min.js"></script> <!-- Magnific popup (http://dimsemenov.com/plugins/magnific-popup/) -->
+        
+        <script>
+
+            function adjustHeightOfPage(pageNo) {
+               
+                // Get the page height
+                var totalPageHeight = 15 + $('.cd-slider-nav').height()
+                                        + $(".cd-hero-slider li:nth-of-type(" + pageNo + ") .js-tm-page-content").height() + 160
+                                        + $('.tm-footer').height();
+
+                // Adjust layout based on page height and window height
+                if(totalPageHeight > $(window).height()) 
+                {
+                    $('.cd-hero-slider').addClass('small-screen');
+                    $('.cd-hero-slider li:nth-of-type(' + pageNo + ')').css("min-height", totalPageHeight + "px");
+                }
+                else 
+                {
+                    $('.cd-hero-slider').removeClass('small-screen');
+                    $('.cd-hero-slider li:nth-of-type(' + pageNo + ')').css("min-height", "100%");
+                }
+
+            }
+
+            /*
+                Everything is loaded including images.
+            */
+            $(window).load(function(){
+
+                adjustHeightOfPage(1); // Adjust page height
+
+                /* Gallery pop up
+                -----------------------------------------*/
+                $('.tm-img-gallery').magnificPopup({
+                    delegate: 'a', // child items selector, by clicking on it popup will open
+                    type: 'image',
+                    gallery:{enabled:true}                
+                });
+
+                /* Collapse menu after click 
+                -----------------------------------------*/
+                $('#tmNavbar a').click(function(){
+                    $('#tmNavbar').collapse('hide');
+
+                    adjustHeightOfPage($(this).data("no")); // Adjust page height       
+                });
+
+                /* Browser resized 
+                -----------------------------------------*/
+                $( window ).resize(function() {
+                    var currentPageNo = $(".cd-hero-slider li.selected .js-tm-page-content").data("page-no");
+                    adjustHeightOfPage( currentPageNo );
+                });
+        
+                // Remove preloader
+                // https://ihatetomatoes.net/create-custom-preloading-screen/
+                $('body').addClass('loaded');
+                           
+            });
+
+        </script>   
+		<!-- <div class="trackcode pull-right">
+			<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://": " http://");
+				document.write(unescape("%3Cspan id='cnzz_stat_icon_4687699'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s23.cnzz.com/stat.php%3Fid%3D4687699' type='text/javascript'%3E%3C/script%3E"));</script>
+			<script>var _hmt = _hmt || []; (function() {
+					var hm = document.createElement("script");
+					hm.src = "//hm.baidu.com/hm.js?b52ad73b0742bc99858449915680c213";
+					var s = document.getElementsByTagName("script")[0];
+					s.parentNode.insertBefore(hm, s);
+				})();</script>
+		</div> -->
+	</div>
+</footer>
+<!-- <script type='text/javascript' src='http://yusi123.com/wp-includes/js/wp-embed.min.js?ver=4.5.4'></script> -->
+</body>
+
+</html>

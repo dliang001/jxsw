@@ -1,0 +1,21 @@
+<?php
+namespace Home\Controller;
+use Think\Controller;
+class LinuxController extends BokeController {
+    /***
+     *  desc    Linux首页
+     *  Author  lizongyang
+     ***/
+
+    public function index(){
+        
+        $where = "isdel = 0 and cid = '".C('linux')."' ";
+        
+        $this->list = D("Article")->getArticleList($where);
+
+        $this->type = M("cate")->where("id = '".C('linux')."'")->getField("name");
+
+        $this->display(Template.'/Linux/index');
+    }
+    
+}

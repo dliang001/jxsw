@@ -1,0 +1,18 @@
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteCond %{REQUEST_FILENAME} !-f
+  
+  #RewriteRule ^(.*)$ index.php/$1 [QSA,PT,L]
+  #RewriteRule ^(.*)$ manager.php/$1 [QSA,PT,L]
+
+  RewriteRule ^deta/([0-9]+)$ /index.php/Deta/index?id=$1 [QSA,PT,L] 
+
+  #php
+  RewriteRule ^Php/([0-9]+)$ /index.php/Php/index/php/$1 [QSA,PT,L] 
+  #mysql
+  RewriteRule ^Mysql/([0-9]+)$ /index.php/Index/index/Mysql/$1 [QSA,PT,L] 
+  
+  RewriteRule ^([a-z|A-Z]+)$ /index.php/$1/index [QSA,PT,L] 
+
+</IfModule>

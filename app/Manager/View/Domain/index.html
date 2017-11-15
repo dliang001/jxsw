@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>域名管理</title>
+		<include file="Public/style" />
+		<style type="text/css">
+			#header_table td {
+				line-height: 30px;
+			}
+		</style>
+	</head>
+<body>
+		<include file="Public/head" />
+		
+		<div class="view-body">
+			<include file="Public/left" />
+			<div class="view-product">
+				<div class="authority">
+					<div class="authority-head">
+						<div class="manage-head">
+							<h6 class="layout padding-left manage-head-con">域名管理
+							</h6>
+							<form>
+							<table class="table" id="header_table">
+								<tr>
+									<td width="50">域名: </td>
+									<td width="200"> <input type="text" class="form-control" name="name" id='name'> </td>
+									<td  width="80">出售类型: </td>
+									<td width="100">
+										<select name="cate_id" id="cate_id" style="margin-left: 10px;">
+										<option value="">全部分类</option>
+								          <foreach name="cate" item="v">
+								            <option value="{$v.id}" <if condition="$Think.get.cate_id eq $v['id']"> selected </if> >{$v.name}</option>
+								            <foreach name="v['child']" item="c">
+								              <option value="{$c.id}" <if condition="$Think.get.cate_id eq $c['id']"> selected </if>  >&nbsp;&nbsp;|-{$c.name}</option>
+								          </foreach>
+								          </foreach>
+								        </select>
+									</td>
+									<td><button type="submit" onclick="search();" class="btn btn-sm btn-primary ng-binding">搜索</button></td>
+								</tr>
+							</table>
+							</form>
+							<button type="button" onclick="add_domain()" class="btn btn-primary btn-xs">添加域名</button>
+							<button style="margin-left: 10px;" onclick="layer.msg('紧急开发中敬请期待...')" type="button" class="btn btn-primary btn-xs">批量添加</button>
+							<button style="margin-left: 10px;" onclick="layer.msg('紧急开发中敬请期待...')" type="button" class="btn btn-primary btn-xs">添加导入</button>
+							<span  id="operation" style="display: none;"> 
+								<button style="margin-left: 10px;" onclick="layer.msg('紧急开发中敬请期待...')" type="button" class="btn btn-primary btn-xs">上架</button>
+								<button style="margin-left: 10px; color: #fff;" onclick="xiajia();" type="button" class="btn btn-red btn-xs">下架</button>	
+							</spsn>
+							
+						</div>
+
+					</div>
+
+					<div class="authority-content">
+
+						<div class="list-content show">
+
+							<div class="offcial-table tr-border margin-big-top clearfix">
+
+								<div class="tr-th clearfix">
+									<div class="th w5"> 
+									<label style="cursor:pointer;">
+						                    <input  class="" type="checkbox" onclick="checkAll(this)">
+						                    <span class="lbl"><b>全选</b></span>
+						                </label>
+                    				</div>
+									<div class="th w10">域名</div>
+									<div class="th w20">介绍</div>
+									<div class="th w10">价格</div>
+									<div class="th w5">币种</div>
+									<div class="th w5">状态</div>
+									<div class="th w15">销售方式</div>
+									<div class="th w15">域名到期时间</div>
+									<div class="th w5">浏览次数</div>
+									<div class="th w5">上下架</div>
+									<div class="th w5">操作</div>
+								</div>
+								<foreach name="list" item="v">
+								<div class="tr clearfix border-bottom-none">
+									<div class="td w5">
+
+										<label><input name="exid[]"  value="{$v[id]}" class="education_select" type="checkbox"  txt_name="{$v[id]}"  onclick="check(this)" ></label>
+									</div>
+									<div class="td w10">{$v.domain}</div>
+									<div class="td w20">{$v.remark|msubstr=0,30}</div>
+									<div class="td w10">{$v.price}</div>
+									<div class="td w5">{$v.money_type}</div>
+									<div class="td w5"><font <if condition="$v['sale_status'] eq '已出售'">color="green" </if> >{$v.sale_status}</font></div>
+									<div class="td w15">{$v.sale_type}</div>
+									<div class="td w15">{$v.exp_time}</div>
+									<div class="td w5">{$v.visit_num}</div>
+									<div class="td w5"><if condition="$v['is_show'] eq 1"><span style="color: green;">上架中</span><else/> <span style="color: red;">已下架</span></if></div>
+									<div class="td w5"><a href="JavaScript:void(0);" onclick="saveDomain({$v['id']});">修改</a></div>
+								</div>
+								</foreach>
+								<if condition="empty($list)">
+								<div><center><h5>无记录</h5></center></div>
+								</if>
+							</div>
+						</div>
+						<div class="show-page padding-big-right">
+							<div class="page">
+								<div class="page">
+									<ul class="offcial-page margin-top margin-big-right">
+										
+										{$show_page}
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<script type="text/javascript">
+		    function checkAll(obj){
+		        var allCheckbox=$(obj).parent().parent().parent().parent().parent().find('input[type="checkbox"]');
+		        for(var i=1;i<allCheckbox.length;i++){
+		            if(allCheckbox.eq(i).is(':checked')){
+		                allCheckbox.eq(i).prop("checked",false);
+		                $("#operation").hide();
+		            }else{
+		                allCheckbox.eq(i).prop("checked",true);
+		                $("#operation").show();
+
+		            }
+		        }
+		    }
+
+		    function check(_this){
+
+			        var id = $(_this).is(":checked");
+			            
+			            if (id)
+			            {
+
+			             $("#operation").show();
+			            }else{
+			             $("#operation").hide();
+			            }
+			       
+			}
+
+			function xiajia(){
+		        var txt_name = new Array();
+		        $('.education_select').each(function(){
+		            if ($(this).is(':checked'))
+		            {
+		                txt_name.push($(this).attr('txt_name'));
+		            }
+
+		        });
+		        var couid = txt_name.length;
+		        layer.msg('您确定下架这'+couid+'条吗?', {
+		            time: 0,
+		            offset: ['50px', '232px'],
+		            btn: ['下架', '取消'],
+		            yes: function () {
+		                $.post(
+		                        '{:U("Domain/xiajia")}', {id: txt_name},
+		                        function (rs) {
+		                            if (rs == 1) {
+		                                layer.msg("下架成功!");
+		                                location.reload();
+		                            } else {
+		                                layer.msg("下架失败!");
+		                            }
+		                        }, 'json'
+		                );
+		                layer.closeAll();
+		            },
+		            cancel:function(){
+		            }
+		        });
+		    }
+
+			function add_domain()
+			{
+				layer.open({
+				  type: 2,
+				  title: false,
+				  area: ['50%', '80%'],
+				  shade: 0.8,
+				  shadeClose: true,
+				  content: '{:U("Domain/add_domain")}'
+				});
+			}
+
+			function search(){
+				var name = $("#name").val();
+				var caid = $("#cate_id").find("option:selected").val();
+				location.href="{U:('Domain/index')}?name="+name+'&caid='+caid;
+			}
+
+			function saveDomain(id){
+				layer.open({
+				  type: 2,
+				  title: false,
+				  area: ['50%', '80%'],
+				  shade: 0.8,
+				  shadeClose: true,
+				  content: '{:U("Domain/add_domain")}?id='+id,
+				});
+			}
+
+
+		</script>
+	</body>

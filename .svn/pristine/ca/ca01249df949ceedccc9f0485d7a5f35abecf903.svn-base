@@ -1,0 +1,17 @@
+<?php
+namespace Manager\Controller;
+use Think\Controller;
+class IndexController extends BokeController {
+    /***
+     *  desc    首页
+     *  Author  lizongyang
+     *  web     www.lizongyang.cn
+     *  email    1638500136
+     ***/
+    public function index(){
+      
+        $this->display();
+    }
+
+   
+}	

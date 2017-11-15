@@ -1,0 +1,28 @@
+<?php
+namespace Home\Controller;
+use Think\Controller;
+class DetaController extends BokeController {
+
+    // 详情页
+    public function index(){
+    	
+        $id = I("get.id");
+        $where = "isdel = 0 and id = {$id} ";
+        D("Article")->where("id = '{$id}' and isdel=0")->setInc('viewnum','1');
+        $this->data = D("Article")->getArticleList($where);
+        //面包屑
+        $this->acname = M("Article")->where("isdel = 0 and id = {$id}")->field("title as name")->find();
+        //随机4条数据
+        $randwhere = "isdel = 0 ";
+        $this->detalist = D("Article")->getArticleList($randwhere,'','rand()',4);
+
+        $this->detalistfoot = D("Article")->getArticleList($randwhere,'','rand()',8);
+       
+        //标签
+        $this->type = M("cate")->where("id = '".C('php')."'")->getField("name");
+
+        $this->display(Template.'/Deta/index');
+    }
+
+  
+}

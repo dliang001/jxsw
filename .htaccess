@@ -1,0 +1,11 @@
+<IfModule mod_rewrite.c>
+ RewriteEngine on
+ RewriteCond %{REQUEST_FILENAME} !-d
+ RewriteCond %{REQUEST_FILENAME} !-f
+ RewriteRule ^(.*)$ index.php/$1 [QSA,PT,L]
+ #RewriteRule ^deta-([0-9]+)$ /index.php/Deta/index?id=$1 [QSA,PT,L] 
+ RewriteRule ^index.html /index.php?m=Index&a=index [QSA,PT,L] 
+ RewriteRule ^cl-(\w+).html /index.php/Index/catelist?id=$1 [QSA,PT,L]
+ RewriteRule ^detail-(\w+).html /index.php/Index/deta?id=$1 [QSA,PT,L]
+ RewriteRule ^s.html /index.php/Index/search [QSA,PT,L]
+</IfModule>

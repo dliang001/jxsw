@@ -1,0 +1,36 @@
+<?php
+// #!/usr/local/bin/php -n
+//error_reporting(0);
+header("Content-type: text/html; charset=utf-8");  
+set_time_limit(0); 
+include('whois.main.php');
+
+$whois = new Whois();
+//引入配置文件
+$db_config = include('../app/Common/Conf/config.php');
+$pdo = new PDO($db_config['DB_TYPE'].':host='.$db_config['DB_HOST'].';dbname='.$db_config['DB_NAME'], $db_config['DB_USER'], $db_config['DB_PWD']);
+
+$pdo->query("SET NAMES 'utf8'");
+//每次查最多执行100条
+$sql  = "select id,domain from kfcms_domain where reg_time = '0000-00-00' limit 100 "; 
+$list = $pdo->query($sql);
+
+if (empty($list)) die;
+
+foreach ($list  as $value) 
+{ 
+    $result = $whois->Lookup($value['domain']);
+    if ($result)
+    {
+		//注册日期
+		$res_date = $result['regrinfo']['domain']['created'];
+		//到期日期
+		$exp_date = $result['regrinfo']['domain']['expires'];
+		//更新日期
+		$up_date  = $result['regrinfo']['domain']['changed'];
+
+	    //修改注册、到期、更新时间
+	    $pdo->query(" update kfcms_domain set reg_time = '".$res_date."',exp_time = '".$exp_date."',whois_update = '".$up_date."' where id = '".$value['id']."' ");
+    }
+}
+

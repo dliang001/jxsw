@@ -1,0 +1,37 @@
+<?php
+namespace Home\Model;
+use Think\Model;
+/**
+ * Author yaopengtao
+ * Email  276523705@qq.com
+ * Date	  2016-10-17
+ */
+class DomainModel extends Model {
+	//表名称
+	protected $tableName = 'domain';
+
+	/**
+	 * Author yaopengtao
+	 * DESC   域名列表
+	 * Email  276523705@qq.com
+	 * Date	  2016-10-17
+	 */
+	function get_domain_list($where, $field = "id,name,pid")
+	{
+		$list = M('cate')->where($where . " and delete_flag = 0 ")->order("sort_no asc")->field("id,name,pid")->select();
+    		foreach ($list as $k => $v) {
+    			$domain_list = M('domain')->where($where . " and cate_id = '".$v['id']."' and is_show = 1 ")->field("domain,remark,sale_status")->select();
+    			
+    			if ($domain_list)
+    			{
+    				$list[$k]['domain_list'] = $domain_list;
+    			} else {
+
+    				unset($list[$k]);
+    			}
+    		}
+    	return $list;
+	}
+
+	
+} 

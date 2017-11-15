@@ -1,0 +1,127 @@
+<include file="Public/style" />
+ <div class="panel admin-panel">
+    <div class="panel-head"><strong class="icon-reorder"> 分配权限 【{$title}】</strong> 
+    </div>
+<style type="text/css">
+  input[type="checkbox"], 
+  input[type="radio"]{ width:12px; height: 20px;vertical-align:-3px;margin-right:5px;}
+
+</style>
+<div class="page-content">
+
+  <div class="col-sm-6" style="width:100%">
+    
+    <div class="tab-content">
+      <div class="row">
+                  <div class="col-xs-12">
+                   <form action="{:U('Admin/fenaction')}" method="POST" >
+                    <div class="table-responsive">
+                    <input type="hidden" name="id" value="{$id}"> 
+                      <table style="margin:1px;" id="sample-table" class="table table-striped table-bordered table-hover">
+                        <thead>
+                          <tr>
+                            <th width="10%">菜单</th>
+                            <th width="90%">功能</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <foreach name="actionList" item="vo" key="k">
+                          <tr id="tr_{$vo.id}">
+                            <th style="text-align:center;vertical-align:middle;"> 
+                              <label> <input type="checkbox" name="data[menu][]" value="{$vo.id}" onclick="setAuth(this, 'menu', {$vo.id})" {$vo.checked}> {$vo.name} </label> 
+                            </th>
+                            <td >
+                              <foreach name="vo['child']" item="c">
+                                <label style="display:block;margin-top:10px;margin-left: 30px;"><input type="checkbox" class="menu_{$c.id}" id="method_{$c.id}" pid="{$vo.id}" name="data[menu][]" value="{$c.id}" onclick="setAuth(this, 'method', {$c.id})"  {$c.checked}> {$c.name}</label> 
+                                  <span style="margin-left: 30px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ∟</span> 
+                                  <foreach name="c['child']" item="cc">
+                                     <label style="margin-left:10px;margin-left: 30px;"><input class="menu_{$c.id}" type="checkbox" pid="{$c.id}" ppid="{$vo.id}"  name="data[menu][]" value="{$cc.id}" onclick="setAuth(this, 'action', {$vo.id})" {$cc.checked}> {$cc.name}</label> 
+                                  </foreach>  
+
+                              </foreach>  
+                            </td>
+                          </tr>
+                          </foreach>   
+                        </tbody>
+                      
+                      </table>
+                    <div class="form-group" style="margin-left: 140px;">
+                      <div class="label">
+                        <label></label>
+                      </div>
+                      <div class="field">
+                        <button class="button bg-main icon-check-square-o" id='submit' type="submit"> 提交</button>
+                      </div>
+                    </div>
+                    </form>
+                  </div>
+                    </div><!-- /.table-responsive -->
+                  </div><!-- /span -->
+                </div>
+      
+      
+    </div>
+  </div>
+                   
+</div><!-- /.page-content -->
+<script type="text/javascript">
+
+
+    function setAuth(_this, _type, _id)
+    {
+        switch (_type)
+        {
+           //点击主菜单所有子菜单都要被选中
+           case 'menu' :
+             if (! $(_this).is(":checked")) 
+             {
+                $("#tr_"+_id).find("input").prop("checked",false);
+             } else {
+                $("#tr_"+_id).find("input").prop("checked", true);
+             } 
+             break;
+           case 'method' :
+                if (! $(_this).is(":checked")) 
+               {
+                  $(".action_"+_id).prop("checked",false);
+               } else {
+                  $(".action_"+_id).prop("checked", true);
+               } 
+               menuCheck($(_this).attr('pid'));
+           break;
+           case 'action' :
+                if ($(_this).is(":checked")) 
+               {
+                  $("#method_"+$(_this).attr('pid')).prop("checked",true);
+                  $("#tr_"+$(_this).attr('ppid')).find('input').eq(0).prop("checked", true);
+               } 
+           break;
+        }
+    }
+
+    //判断是否选中主菜单
+    function menuCheck(_id)
+    {
+        var status = false;
+        $("#tr_"+_id).find('input').each(function(i){
+          //排除第一个
+            if (i > 0) {
+              if ( $("#tr_"+_id).find('input').eq(i).is(":checked") ) status = true;
+            }
+        });
+        if (status)
+        {
+            $("#tr_"+_id).find('input').eq(0).prop("checked", true);
+        } else {
+            $("#tr_"+_id).find('input').eq(0).prop("checked", false);
+        }
+    }
+
+    //系统选择
+    function systemOption(_this)
+    {
+        var app = $(_this).find("option:selected").val();
+        window.location.href = "{$formAction}?ID={$Think.get.ID}&CityId={$Think.get.CityId}&app="+app;
+    }
+</script>
+<include file="./Application/Common/Style/foot.html"/>

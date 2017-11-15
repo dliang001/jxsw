@@ -1,0 +1,74 @@
+<include file="Default/Index/header" />
+ 
+<section class="container">
+  <div class="speedbar">
+    <div class="toptip"><strong class="text-success"><i class="fa "></i> </strong></div>
+  </div>
+<div class="content-wrap">
+  <div class="content">
+
+    <header class="archive-header">
+     <h1 ><i class="fa "></i><span style="font-size: 19px;">搜索：{$title}</span> 
+     <div style="font-size: 17px;float: right;;"><span style="color: red;">{$count}</span>条</div> </h1>
+    </header>
+
+
+  <foreach name="list" item='v'>
+
+      <if condition='$v["title"]'>
+          <article class="excerpt">
+              <header>
+                <a class="label label-important" href="/{$v['cname']}">{$v['cname']}
+                  <i class="label-arrow"></i></a>
+                
+                <h2>
+                  <a target="_blank" href="<php>echo detaurl(deta,$v['id']);</php>" title="{$v['title']}">{$v['title']}</a></h2>
+              </header>
+              <div class="focus">
+                <a target="_blank" href="<php>echo detaurl(deta,$v['id']);</php>">
+                  <img style='height: 123px; width: 200px;'  class="thumb" src="{$v['picurl'][0]['src']}" alt="{$v['title']}" /></a>
+              </div>
+              <span class="note">{$v['desc']|msubstr=0,150}</span>
+              <p class="auth-span">
+                <span class="muted">
+                  发布时间：{$v['createtime']}</span>
+                <span class="muted">
+                  热度：{$v['viewnum']}℃</span>
+                <span class="muted">
+                  <i class="fa fa--o"></i>
+                  <!-- <a target="_blank" href="">16评论</a></span> -->
+                <!-- <span class="muted">
+                  <a href="javascript:;" data-action="ding" data-id="3798" id="Addlike" class="action">
+                    <i class="fa fa-heart-o"></i>
+                    <span class="count">41</span>喜欢</a></span> -->
+              </p>
+           </article>
+      <else/>
+        <article class="excerpt">
+              <header style="margin-left: 15px;">
+                <h1 style="color: #ccc; font-size: 15px;">您搜索的 <span style="color: red;">{$title}</span>没有数据！换个姿势搜搜吧！！😝😝😝😝~</h1>
+              </header>
+           </article>
+      </if>
+      
+</foreach>
+
+
+  
+  
+
+
+
+<div class="pagination">
+  <ul>
+    {$page}
+    
+  </ul>
+
+</div>
+</div>
+</div>
+<include file="Default/Index/left" />
+
+</section>
+<include file="Default/Index/footer" />

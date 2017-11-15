@@ -1,0 +1,88 @@
+<include file="Default/Index/header" />
+        <!-- 特效圈 -->
+        <div id="loader-wrapper">
+            <div id="loader"></div>
+            <div class="loader-section section-left"></div>
+            <div class="loader-section section-right"></div>
+        </div>
+      <section class="container">
+        <div class="speedbar">
+          <div class="toptip"><strong class="text-success"><i class=""></i> </strong></div>
+        </div>
+        <div class="content-wrap">
+          <div class="content">
+            <div id="wowslider-container1">
+              <div class="ws_images">
+              <!-- 大图 -->
+                <ul>
+                  <foreach name='imglist' item='v'>
+                    <li>
+                      <a target="_blank" href="<php>echo detaurl(deta,$v['id']);</php>" title="{$v['title']}">
+                        <img style="height: 330px;" src="{$v['picurl'][0]['src']}" title="{$v['title']}" alt="{$v['title']}" />
+                      </a>
+                    </li>
+                  </foreach>  
+                </ul>
+              </div>
+              <!-- 小图 -->
+              <div class="ws_thumbs">
+                <div>
+                <foreach name='imglist' item='v'>
+                   <a target="_blank" href="" title="{$v['title']}">
+                    <img src="{$v['picurl'][0]['src']}" />
+                    </a>
+                </foreach> 
+                </div>
+              </div>
+              <div class="ws_shadow"></div>
+            </div>
+            <script type="text/javascript" src="{$Think.const.BOKE_STATIC_PATH}/home/default/js/jb.js"></script>
+<div class="hot-posts">
+  <h2 class="title">本周热门排行</h2>
+  <ul></ul>
+</div>
+<foreach name="list" item='v'>
+
+      <article class="excerpt">
+      <!-- <php>$url = detaurl(deta,$v['id']);</php> -->
+      <header>
+        <a class="label label-important" href="share/free.html">{$v['cname']}
+          <i class="label-arrow"></i></a>
+        
+        <h2>
+          <a target="_blank" href="<php>echo detaurl(deta,$v['id']);</php>" title="{$v['title']}">{$v['title']}</a></h2>
+      </header>
+      <div class="focus">
+        <a target="_blank" href="<php>echo detaurl(deta,$v['id']);</php>">
+          <img style='height: 123px; width: 200px;'  class="thumb" src="{$v['picurl'][0]['src']}" alt="{$v['title']}" /></a>
+      </div>
+      <span class="note">{$v['desc']|msubstr=0,150}</span>
+      <p class="auth-span">
+        <span class="muted">
+          发布时间：{$v['createtime']}</span>
+        <span class="muted">
+          热度：{$v['viewnum']}℃</span>
+        <span class="muted">
+          <i class="fa fa-comments-o"></i>
+          <!-- <a target="_blank" href="">16评论</a></span> -->
+        <!-- <span class="muted">
+          <a href="javascript:;" data-action="ding" data-id="3798" id="Addlike" class="action">
+            <i class="fa fa-heart-o"></i>
+            <span class="count">41</span>喜欢</a></span> -->
+      </p>
+    </article>
+</foreach>
+
+ <div class="pagination">
+  <ul>
+    {$page}
+    
+  </ul>
+</div> 
+</div>
+</div>
+<include file="Default/Index/left" />
+
+
+</section>
+<include file="Default/Index/footer" />

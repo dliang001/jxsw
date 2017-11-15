@@ -1,0 +1,360 @@
+<?php
+namespace Manager\Controller;
+use Think\Controller;
+class AdminController extends BokeController {
+     /***
+     *  desc    首页
+     *  Author  lizongyang
+     *  web     www.lizongyang.cn
+     *  email    1638500136
+     ***/
+    public function index()
+    {
+        
+        $this->data = M("setup")->where('id= 1')->find();
+        $this->display();
+    }
+
+    /***
+     *  desc    分类管理
+     *  Author  lizongyang
+     *  web     www.lizongyang.cn
+     *  email    1638500136
+     ***/
+    public function cate()
+    {
+
+        $this->display();
+    }
+    /***
+     *  desc    首页导航
+     *  Author  lizongyang
+     *  web     www.lizongyang.cn
+     *  email    1638500136
+     ***/
+    public function nav()
+    {
+        
+        $this->display();
+    } 
+
+    /***
+     *  desc    文章列表
+     *  web     www.lizongyang.cn
+     *  email    1638500136
+     ***/
+    public function arlist()
+    {
+        // dump($this->list); 
+        $where = "isdel = 0";
+        $count = D('Article')->where($where)->count(); //分页
+        $Page = new \Think\Page($count, 30);
+        $this->page = $Page->show();// 分页显示输出
+        $this->list = D("Article")->getArticleList($where, "*", "id desc", $Page->firstRow . ',' . $Page->listRows); 
+        $this->cate = M("cate")->where("delete_flag = 0")->select();
+        $this->display();
+    }
+
+     /***
+     *  desc    添加内容
+     *  Author  lizongyang
+     *  web     www.lizongyang.cn
+     *  email   1638500136
+     ***/
+    public function add()
+    {
+        $id = I("get.id",'','intval');
+
+        $this->data = M('article')->where("id= '{$id}'")->find();//save($asset_ids);
+        //取出图片
+        $asset = array();
+        foreach($this->data as $k => $v){
+            $asset_  = M('assets')->where("id = '".$v."' ")->find();
+            if(!empty($asset_)){
+                $asset[$k] = $asset_['domain']. '/uploads/' .$asset_['savepath'].$asset_['savename'];
+            }else{
+                $asset[$k] = '';
+            }
+        }
+        $this->asset = $asset;
+        $this->cate = M("cate")->where("delete_flag = 0")->select();
+
+        $this->display();
+    }
+
+     /***
+     *  desc    添加文章处理
+     *  Author  lizongyang
+     *  web     www.lizongyang.cn
+     *  email   1638500136
+     ***/
+    public function addarticle()
+    {
+        if(IS_POST){
+           $data = I('post.');
+           
+            //图片信息
+            $asset = D('Assets')->uploadImage();
+            if($asset){
+                $asset_ids = array();
+                foreach($asset as $k => $v){
+                    $domain = "http://" . $_SERVER['SERVER_NAME'] .":". $_SERVER["SERVER_PORT"] . __ROOT__;
+                    //入库
+                   $assetid = M('Assets')->add(array(
+                        'name'      => $v['name'],
+                        'savename'  => $v['savename'],
+                        'savepath'  => $v['savepath'],
+                        'createtime'=> date('Y-m-d H:i:s'),
+                        'domain'    => $domain,
+                    ));
+
+                    $asset_ids[$k] = $assetid;
+
+                }
+                $data['pic'] = $asset_ids[$k];
+                $data['createtime'] = date("Y-m-d H:i:s");
+                
+            }else{
+                $data['pic'] = $data['pictype'];    
+            }
+            
+            
+            if($data['id'])
+            { 
+                unset($data['createtime']);
+                if(M('article')->where("id= {$data['id']} ")->save($data))
+                {
+                    $this->success('操作成功!', U('Admin/arlist'));
+                }
+
+           }else{
+
+                if(M('article')->add($data))
+                {
+                    $this->success('操作成功!', U('Admin/arlist'));
+                }
+                
+            }
+            //多传状态
+            // if (I('post.active_id'))
+            // {
+            //    $asset_ids['remark'] = I('post.active_id');
+            // } 
+            
+        }
+
+       
+    }
+
+    /***
+     *  desc    首页轮播图
+     *  web     www.lizongyang.cn
+     *  email    1638500136
+     ***/
+    public function indeximg()
+    {
+
+        $this->list = D("Article")->getImgList(); 
+
+        $this->display();
+    }
+
+    /***
+     *  desc    设置轮播图
+     *  web     www.lizongyang.cn
+     *  email    1638500136
+     ***/
+    public function editimg()
+    {
+        if(IS_POST)
+        {
+            $id = I("post.id",'0','intval');
+            $res = D("Article")->where("id = '{$id}' ")->save(array('indeximg'=>1));
+            if($res)
+            {
+                echo json_encode(1);
+            }else{
+                echo json_encode(2);
+            }
+        }
+    }
+
+    /***
+     *  desc    取消轮播图
+     *  web     www.lizongyang.cn
+     *  email    1638500136
+     ***/
+    public function qxeditimg()
+    {
+        if(IS_POST)
+        {
+            $id = I("post.id",'0','intval');
+            $res = D("Article")->where("id = '{$id}' ")->save(array('indeximg'=>0));
+            if($res)
+            {
+                echo json_encode(1);
+            }else{
+                echo json_encode(2);
+            }
+        }
+    }
+
+    /***
+     *  desc    网站配置
+     *  web     www.lizongyang.cn
+     *  email    1638500136
+     ***/
+    public function setup()
+    {
+        if(IS_POST)
+        {
+            $data = I("post.");
+            if($data['id'])
+            {
+               if(M('setup')->where("id={$data['id']}")->save($data))
+                {
+                    $this->success('操作成功!', U('Admin/Index'));
+                }else{
+                    $this->error('操作失败！');
+                }
+
+            }else{
+
+                if(M('setup')->add($data))
+                {
+                    $this->success('操作成功!', U('Admin/Index'));
+                }
+            }
+            
+        }
+    }
+
+    /***
+     *  desc    友情链接
+     *  web     www.lizongyang.cn
+     *  email    1638500136
+     ***/
+
+    Public function youqing()
+    {
+
+        $this->list = M("youqing")->select(); 
+        // dump($this->list);  
+        $this->display();
+
+    }
+
+    /***
+     *  desc    add友情链接
+     *  web     www.lizongyang.cn
+     *  email    1638500136
+     ***/
+
+    Public function addyouqing()
+    {
+        
+        if(IS_POST)
+        {
+            
+            $data = I('post.');
+            $data['createtime'] = date("Y-m-d H:i:s");
+
+            if($data['id'])
+            {
+                if(M('youqing')->where("id = '{$data['id']}'")->save($data))
+                {
+                    echo json_encode(1);exit;
+                }else{
+                    echo json_encode(2);exit;
+                }  
+
+            }else{
+                if(M('youqing')->add($data))
+                {
+                    echo json_encode(1);exit;
+                }else{
+                    echo json_encode(2);exit;
+                }  
+            }
+              
+        }
+
+        $id = I('get.id');
+        $this->data = M("youqing")->where("id = {$id}")->find();
+        $this->display();
+
+    }
+
+    /***
+     *  desc    编辑友情链接
+     *  web     www.lizongyang.cn
+     *  email    1638500136
+     ***/
+
+    Public function edit()
+    {
+        
+        echo $id = I('get.id');
+        if(IS_POST)
+        {
+            $data = I('post.');
+            $data['createtime'] = date("Y-m-d H:i:s");
+            if(M('youqing')->add($data))
+            {
+                echo json_encode(1);exit;
+            }else{
+                echo json_encode(2);exit;
+            }    
+        }
+        $this->display();
+
+    }
+
+    /***
+     *  desc    del友情链接
+     *  web     www.lizongyang.cn
+     *  email    1638500136
+     ***/
+    public function delyq()
+    {
+        if(IS_POST)
+        {
+            
+            $id = I('post.id');
+
+            if(M('youqing')->where("id={$id}")->delete())
+            {
+                echo json_encode(1);
+            }else{
+                echo json_encode(2);
+            }
+
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+}	

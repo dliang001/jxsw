@@ -1,0 +1,34 @@
+<div class="view-sidebar">
+				<div class="sidebar-content">
+					<div class="sidebar-nav">
+						<div class="sidebar-title">
+							<a href="#">
+								<span class="icon"><b class="fl icon-arrow-down"></b></span>
+								<span class="text-normal">产品与服务</span>
+							</a>
+						</div>
+						<ul class="sidebar-trans">
+							<li>
+								<a href="{:U('Domain/index')}">
+									<b class="sidebar-icon"><img src="{$Think.const.BOKE_STATIC_PATH}/manager/images/icon_domain.png" width="16" height="16" /></b>
+									<span class="text-normal">域名管理</span>
+								</a>
+							</li>
+							
+						</ul>
+					</div>
+					
+				</div>
+			</div>
+
+			<script>
+			$(".sidebar-title").live('click', function() {
+				if ($(this).parent(".sidebar-nav").hasClass("sidebar-nav-fold")) {
+					$(this).next().slideDown(200);
+					$(this).parent(".sidebar-nav").removeClass("sidebar-nav-fold");
+				} else {
+					$(this).next().slideUp(200);
+					$(this).parent(".sidebar-nav").addClass("sidebar-nav-fold");
+				}
+			});
+		</script>

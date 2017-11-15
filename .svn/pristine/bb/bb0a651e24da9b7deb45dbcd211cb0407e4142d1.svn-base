@@ -1,0 +1,19 @@
+<?php
+namespace Home\Controller;
+use Think\Controller;
+class SbController extends BokeController {
+   /***
+     *  desc    随笔首页
+     *  Author  lizongyang
+     ***/
+
+    public function index(){
+        
+        $where = "isdel = 0 and cid = '".C('sb')."' ";
+        
+        $this->list = D("Article")->getArticleList($where);
+        $this->type = M("cate")->where("id = '".C('sb')."'")->getField("name");
+
+        $this->display(Template.'/Sb/index');
+    }
+}

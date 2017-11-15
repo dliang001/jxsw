@@ -1,0 +1,41 @@
+<?php
+namespace Home\Model;
+use Think\Model;
+/**
+ * Author yaopengtao
+ * Email  276523705@qq.com
+ * Date	  2016-10-17
+ */
+class AdminModel extends Model {
+	//表名称
+	protected $tableName = 'admin'; 
+
+	/**
+	 * Author yaopengtao
+	 * DESC   获取当前用户编号
+	 * Email  276523705@qq.com
+	 * Date	  2016-10-17
+	 */
+	function get_domain_user_id($domain)
+	{
+		return M($this->tableName)->where(array(
+			'username' => $domain,
+			'locked'   => 0
+		))->cache(true)->getField("id");
+	}
+
+	/**
+	 * Author yaopengtao
+	 * DESC   获取当前用户名称
+	 * Email  276523705@qq.com
+	 * Date	  2016-10-17
+	 */
+	public function get_domain_admin($domain, $field="username,tel,qq,email")
+	{
+		$user_id = M('domain')->where(array(
+			'domain' => $domain,
+		))->getField("user_id");
+
+		return M($this->tableName)->where(array('id'=>$user_id))->field($field)->find();
+	}
+}
